@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<ToDo.Models.Task>
+
+
+        
+@using (Html.BeginForm("SetSort", "Home", FormMethod.Get))
+{   <table class="table">
+       <tr>
+           <th class="col-md-3">
+               @Html.DropDownList("type",
+                EnumHelper.GetSelectList(typeof(ToDo.Controllers.Sort_Types)),
+                ViewBag.Sort_type_now.ToString() as String,
+                new { @class = "form-control" }
+               )
+           </th>
+
+           <th>
+               <input type="submit" value="Sort Tasks" class="btn btn-primary">
+           </th>
+       </tr>
+    </table>
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Complete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Importance_Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Due_Date)
+            </th>
+            @if (ViewBag.show_list_title)
+            {
+                <th>
+                    @Html.Label("List")
+                </th>
+            }
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complete)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Title, "DetailsTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-info" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Importance_Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Due_Date)
+                </td>
+                @if (ViewBag.show_list_title)
+                {
+                    <td>
+                        @Html.Label((ViewBag.List_Titles as Dictionary<int, string>)[item.List_Id])
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink("Details", "DetailsTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Edit", "EditTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>

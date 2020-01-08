@@ -1,0 +1,62 @@
+﻿@model ToDo.Models.Task
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Complete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Complete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Importance_Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Importance_Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Due_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Due_Date)
+        </dd>
+       
+
+    </dl>
+</div>
+<p>
+    <a class="btn btn-warning" href="javascript:history.go(-1)">Back</a>
+    |
+    @Html.ActionLink("Edit", "EditTask", new { Model.Id }
+                            , htmlAttributes: new { @class = "btn btn-primary" })
+
+</p>

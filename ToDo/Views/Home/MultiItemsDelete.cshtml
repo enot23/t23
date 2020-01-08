@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ToDo.Models.Task>
+
+@{
+    ViewBag.Title = "Multi Items Delete";
+}
+
+<h2>Multi Items Delete</h2>
+@using (Html.BeginForm("MultiItemsDelete", "Home", FormMethod.Post))
+
+{
+    
+<p>
+    <a class="btn btn-warning" href="javascript:history.go(-1)">Back</a> |
+    <input type="submit" value=" Delete Items" onclick="return confirm('Are you sure you wish to delete selected Tasks?');" class="btn btn-danger" />
+
+</p>
+    <table class="table">
+        <tr>
+            <th>
+                Select
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Complete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Importance_Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Due_Date)
+            </th>
+            <th>
+                @Html.Label("List")
+            </th>
+            <th></th>
+        </tr>
+    
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="tasks_to_delete" value="@item.Id" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complete)
+                </td>                
+                <td>
+                    @Html.ActionLink(item.Title, "DetailsTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-info" })
+                </td>                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Importance_Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Due_Date)
+                </td>
+                <td>
+                    @Html.Label((ViewBag.List_Titles as Dictionary<int, string>)[item.List_Id])
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "DetailsTask", new { id = item.Id }
+                                                     , htmlAttributes: new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Edit", "EditTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id }
+                                                        , htmlAttributes: new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    
+    </table>
+}

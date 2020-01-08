@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ToDo.Models.Task>
+
+@{
+    ViewBag.Title = "List Details";
+}
+
+<h2>List Details</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <label>Title:</label>
+        </dt>
+
+        <dd>
+            <label>@ViewBag.list.Title</label>
+        </dd>
+        <dt>
+            <label>Hide Completed:</label>
+        </dt>
+
+        <dd>
+
+            @{
+                if (ViewBag.list.HideCompleted)
+                {
+                    @Html.Label("Enabled");
+                }
+                else
+                {
+                    @Html.Label("Disabled");
+                }
+            }
+
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", null
+                            , htmlAttributes: new { @class = "btn btn-warning" })  |
+    @{
+        if (ViewBag.Edit_Ability)
+        {
+
+            @Html.ActionLink("Edit", "EditList", new { ViewBag.list.Id }
+                             , htmlAttributes: new { @class = "btn btn-primary" });
+        }
+        else
+        {
+            @Html.ActionLink("Settings", "SettingsList", new { ViewBag.list.Id }
+                             , htmlAttributes: new { @class = "btn btn-primary" });
+        }
+    }
+
+</p>
+<h2 class="col-md-offset-5">Tasks</h2>
+<p>
+
+    @if (ViewBag.Edit_Ability)
+    {
+        @Html.ActionLink("Create New Task", "CreateTask", new { id = ViewBag.list.Id }
+                                        , htmlAttributes: new { @class = "btn btn-success" });
+    }
+
+
+</p>
+    @if (ViewBag.Edit_Ability)
+     {
+        @Html.Action("ListOfTasks", "Home", new {Model, show_list_title = false }); 
+     }
+    else
+    {
+        @Html.Action("ListOfTasks", "Home", new {Model, show_list_title = true }); 
+    }

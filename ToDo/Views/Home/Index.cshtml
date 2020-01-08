@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ToDo.Models.Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>ToDo</h2>
+
+<p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Create New List", "CreateList", null, htmlAttributes: new { @class = "btn btn-success" })
+            </th>
+            <th>
+                @Html.ActionLink("Delete multi tasks", "MultiItemsDelete", null, htmlAttributes: new { @class = "btn btn-danger" })
+            </th>
+            <th>
+                @using (Html.BeginForm("SearchTasks", "Home", FormMethod.Get))
+                {
+                    @Html.TextBox("request","", htmlAttributes: new { Style="color:black;"})
+                    <input type="submit" value="Search Tasks" class="btn btn-primary">
+                     @Html.ActionLink("Сlean up","Index",null,htmlAttributes: new { @class = "btn btn-warning" })
+                }
+            </th>
+        </tr>
+      </table>
+</p>
+    
+    @Html.Partial("SearchTasks", Model)
+
+    @{Html.RenderAction("ListOfLists", Model); }

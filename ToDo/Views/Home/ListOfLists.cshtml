@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ToDo.Models.Task> 
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.Label("Count of Uncompleted tasks"
+                                                , htmlAttributes: new { @class = "col-md-offset-2" })
+        </th>
+        <th>
+            @Html.Label("Count of Tasks")
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in @ViewBag.SmartLists)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink((string)item.Title, "DetailsSmartList", new { title = item.Title }
+                                                    , htmlAttributes: new { @class = "btn btn-info" })
+            </td>
+            <td>
+                @Html.Label((string)ViewBag.Smart_Uncompleted_Tasks_Count[item.Id - 1].ToString()
+                                                , htmlAttributes: new { @class = "col-md-offset-4" })
+            </td>
+            <td>
+                @Html.Label((string)ViewBag.Smart_Tasks_Count[item.Id - 1].ToString()
+                                                , htmlAttributes: new { @class = "col-md-offset-2" })
+            </td>
+            <td>
+                @Html.ActionLink("Details", "DetailsSmartList", new { title = item.Title }
+                                                    , htmlAttributes: new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Settings", "SettingsList", new { id = item.Id }
+                                                , htmlAttributes: new { @class = "btn btn-warning" })
+
+            </td>
+
+        </tr>
+    }
+
+
+    @foreach (var item in @ViewBag.CustomLists)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink((string)item.Title, "DetailsList", new { id = item.Id }
+                                                    , htmlAttributes: new { @class = "btn btn-info" })
+            </td>
+
+            <td>
+                @Html.Label((string)(ViewBag.Custom_Uncompleted_Tasks_Count as Dictionary<int, int>)[item.Id].ToString()
+                                                    , htmlAttributes: new { @class = "col-md-offset-4" })
+            </td>
+
+            <td>
+                @Html.Label((string)(ViewBag.Custom_Tasks_Count as Dictionary<int, int>)[item.Id].ToString()
+                                                    , htmlAttributes: new { @class = "col-md-offset-2" })
+            </td>
+
+            <td>
+                @Html.ActionLink("Details", "DetailsList", new { id = item.Id }
+                                                    , htmlAttributes: new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Edit", "EditList", new { id = item.Id }
+                                                    , htmlAttributes: new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Delete", "DeleteList", new { id = item.Id }
+                                                    , htmlAttributes: new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
